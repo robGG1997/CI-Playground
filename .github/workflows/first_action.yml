@@ -1,0 +1,27 @@
+name: First Action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  auto-push:
+    name: Auto Push
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Duplicate Web3 Unity Samples
+      run: |
+        git config user.email $git_email
+        git config user.name "${{ github.actor }}"
+        
+        export DESTINATION="${GITHUB_WORKSPACE}/$GITHUB_SHA/"
+        
+        mkdir -p "$DESTINATION"
+        cp -r "${GITHUB_WORKSPACE}/copy.txt" "$DESTINATION"
+        
+        git add "$DESTINATION_PATH."
+        
+        git diff-index --cached --quiet HEAD || git commit -m "Auto Push $GITHUB_SHA"
+        git push
+      env:
+        git_email: "${{ github.actor }}@users.noreply.github.com"
