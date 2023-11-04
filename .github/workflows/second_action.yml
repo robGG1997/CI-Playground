@@ -1,10 +1,9 @@
 name: Second Action
 
 on:
-  workflow_dispatch:
   pull_request:
     types:
-      - edited
+      - labeled
     branches:
       - main
 
@@ -12,6 +11,7 @@ jobs:
   merge-check:
     name: Merge Check
     runs-on: ubuntu-latest
+    if: ${{ github.event.label.name == 'Ready' }}
     steps:
       - uses: actions/checkout@v4
       - name: Echo Success
