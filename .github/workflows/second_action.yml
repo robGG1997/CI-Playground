@@ -11,7 +11,7 @@ jobs:
   merge-check:
     name: Merge Check
     runs-on: ubuntu-latest
-    if: ${{ github.event.label.name == 'Ready' }}
+    if: ${{ github.event.label.name == 'ready' }}
     steps:
       - uses: actions/checkout@v4
       - name: Echo Success
